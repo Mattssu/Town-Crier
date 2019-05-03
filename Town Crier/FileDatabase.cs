@@ -1,11 +1,6 @@
-﻿using DiscordBot.Modules.ChatCraft;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DiscordBot
 {
@@ -26,7 +21,7 @@ namespace DiscordBot
 				{
 					PreserveReferencesHandling = PreserveReferencesHandling.Objects
 				};
-				
+
 				foreach (JsonConverter converter in customConverters)
 				{
 					settings.Converters.Add(converter);

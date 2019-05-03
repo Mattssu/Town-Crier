@@ -47,7 +47,7 @@ namespace BugReporter
 
 			RestUserMessage userMessage = channel.GetMessageAsync(message.Id).Result as RestUserMessage;
 
-			Task.Run(() => new JiraReporter().Report(reaction.User.Value, client, userMessage, new InteractiveService(client, TimeSpan.FromMinutes(5)), type));
+			await Task.Run(() => new JiraReporter().Report(reaction.User.Value, client, userMessage, new InteractiveService(client, TimeSpan.FromMinutes(5)), type));
 		}
 	}
 

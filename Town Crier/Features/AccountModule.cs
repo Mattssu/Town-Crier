@@ -202,7 +202,7 @@ namespace DiscordBot
 						{
 							await user.AddRoleAsync(supporterRole);
 						}
-						catch (Exception e)
+						catch (Exception)
 						{
 							Console.WriteLine("Error adding role");
 							Console.WriteLine(user);

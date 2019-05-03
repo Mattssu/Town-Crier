@@ -1,6 +1,5 @@
 ﻿using Discord;
 using Discord.WebSocket;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -60,7 +59,7 @@ namespace ActivityRoles
 			if (TryGetRole(guild, out role))
 			{
 				foreach (IGuildUser user in guild.Users)
-				{ 
+				{
 					await ApplyRole(role, user);
 				}
 			}
@@ -78,7 +77,7 @@ namespace ActivityRoles
 				}
 			}
 		}
-		
+
 		async Task ApplyRole(IRole role, IGuildUser user)
 		{
 			if (IsMatched(user.Activity))
@@ -102,12 +101,12 @@ namespace ActivityRoles
 		bool IsMatched(IActivity activity)
 		{
 			return
-				activity != null && 
+				activity != null &&
 				(activities & (1 << (int)activity.Type)) != 0 &&
 				Regex.IsMatch(activity.Name, nameRegex, RegexOptions.IgnoreCase);
 		}
 	}
-	
+
 	public class ActivityRoleManager
 	{
 		public bool IsEnabled { get; private set; }
@@ -139,7 +138,7 @@ namespace ActivityRoles
 				}
 			}
 		}
-				
+
 		public async Task SetEnabled(bool isEnabled)
 		{
 			if (isEnabled != IsEnabled)
@@ -152,7 +151,7 @@ namespace ActivityRoles
 					client.GuildUnavailable += RemoveRolesAsync;
 
 					client.GuildMemberUpdated += UserUpdatedAsync;
-					
+
 					foreach (SocketGuild guild in client.Guilds)
 					{
 						await ApplyRolesAsync(guild);
@@ -164,7 +163,7 @@ namespace ActivityRoles
 					client.GuildUnavailable -= RemoveRolesAsync;
 
 					client.GuildMemberUpdated -= UserUpdatedAsync;
-					
+
 					foreach (SocketGuild guild in client.Guilds)
 					{
 						await RemoveRolesAsync(guild);
@@ -189,7 +188,7 @@ namespace ActivityRoles
 				activity.InitializeForGuild(guild);
 
 				//Not awaiting so they all go at once
-				activity.ApplyRole(guild);
+				await activity.ApplyRole(guild);
 			}
 		}
 
@@ -214,13 +213,13 @@ namespace ActivityRoles
 
 			await Task.CompletedTask;
 		}
-		
+
 		async Task RemoveRoles(SocketGuild guild)
 		{
 			foreach (ActivityDefinition activity in activities)
 			{
 				//Not awaiting so they all go at once
-				activity.RemoveRole(guild);
+				await activity.RemoveRole(guild);
 			}
 		}
 	}

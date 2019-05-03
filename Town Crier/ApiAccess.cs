@@ -80,7 +80,7 @@ public static class ApiAccess
 					File.WriteAllText("account.txt", username + "|" + password);
 				}
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
 				Console.WriteLine("`account.txt` found, but failed reading the contents." +
 					" Expected format: `username|password` (for your Alta account)");

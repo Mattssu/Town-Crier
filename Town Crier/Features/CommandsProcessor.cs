@@ -6,9 +6,7 @@ using DiscordBot.Modules.ChatCraft;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DiscordBot.Features
@@ -21,16 +19,16 @@ namespace DiscordBot.Features
 		readonly IServiceProvider services;
 		readonly IServiceCollection map = new ServiceCollection();
 		readonly CommandService commands = new CommandService();
-		
+
 		readonly Dictionary<ulong, Func<SocketUserMessage, Task<bool>>> channelHandlers = new Dictionary<ulong, Func<SocketUserMessage, Task<bool>>>();
 
 		public CommandsProcessor(DiscordSocketClient client)
 		{
 			this.Client = client;
-			
+
 			map.AddSingleton(client);
 			map.AddSingleton<InteractiveService>();
-			
+
 			services = map.BuildServiceProvider();
 
 			Interactive = services.GetService<InteractiveService>();
@@ -52,7 +50,7 @@ namespace DiscordBot.Features
 			commands.AddTypeReader<ExploreSet>(new ExploreSetTypeReader());
 
 			await commands.AddModulesAsync(Assembly.GetEntryAssembly());
-			
+
 			Client.MessageReceived += HandleCommandAsync;
 		}
 
@@ -100,15 +98,15 @@ namespace DiscordBot.Features
 				if (isMentioned || message.HasCharPrefix('!', ref commandStartIndex))
 				{
 					await CheckCommand(message, commandStartIndex);
-				}
-				else
-				{
-					WikiSearcher.Process(message);
 
 					if (isMentioned)
 					{
 						await DoYouCare.Process(message);
 					}
+				}
+				else
+				{
+					WikiSearcher.Process(message);
 				}
 			}
 			catch (Exception e)

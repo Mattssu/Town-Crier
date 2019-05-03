@@ -1341,9 +1341,7 @@ namespace DiscordBot.Modules.ChatCraft
 					
 					foreach (Unit unit in player.party.AllUnits)
 					{
-						Player member = unit as Player;
-
-						if (member != null && !member.locations.Contains(location))
+						if (unit is Player member && !member.locations.Contains(location))
 						{
 							member.locations.Add(location);
 
@@ -1386,9 +1384,7 @@ namespace DiscordBot.Modules.ChatCraft
 			{
 				foreach (Unit unit in player.party.AllUnits)
 				{
-					Player member = unit as Player;
-
-					if (member != null && !member.locations.Contains(location))
+					if (unit is Player member && !member.locations.Contains(location))
 					{
 						member.locations.Add(location);
 
