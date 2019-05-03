@@ -35,5 +35,7 @@ namespace DiscordBot.Modules.ChatCraft
 
 		public uint usedHourPoints = 0;
 		public DateTime usedFirstHourPoint;
+
+		public string description;
 	}
 }
